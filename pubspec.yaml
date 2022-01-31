@@ -1,0 +1,49 @@
+name: foodies
+description: an app to find Indonesian recipes.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  http: ^0.13.4
+  readmore: ^2.1.0
+  animate_do: ^2.1.0
+  flutter_svg: ^1.0.3
+  cupertino_icons: ^1.0.2
+  cached_network_image: ^3.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^1.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Acherus
+      fonts:
+        - asset: assets/fonts/Acherus-Grotesque-Bold.otf
+
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/Avenir-Medium.ttf
+        - asset: assets/fonts/Avenir-Black.ttf
+
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+        - asset: assets/fonts/Inter-SemiBold.ttf
