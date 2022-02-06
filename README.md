@@ -1,4 +1,4 @@
-![](https://github.com/tustoz/netflix_redesign/blob/master/foodies.png)
+![](https://github.com/tustoz/foodies/blob/master/foodies.png)
 
 # Foodies
 
