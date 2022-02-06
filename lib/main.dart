@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         'Onboarding': (context) => const OnboardingScreen(),
       },
       initialRoute:
-          initScreen == 0 || initScreen == null ? "Home" : "Onboarding",
+          initScreen == 0 || initScreen == null ? "Onboarding" : "Home",
       debugShowCheckedModeBanner: false,
     );
   }
