@@ -1,14 +1,12 @@
-// ignore_for_file: non_constant_identifier_names, unused_field, prefer_final_fields, unused_local_variable
-
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:foodies/components/category_list.dart';
 
+import 'package:foodies/components/header.dart';
+import 'package:foodies/components/home/category_list.dart';
+import 'package:foodies/components/search/search_bar.dart';
 import 'package:foodies/components/bottom_bar.dart';
 
-import 'package:foodies/screens/search.dart';
+import 'package:foodies/data/category_label.dart';
 import 'package:foodies/utils/services.dart';
 import 'package:foodies/constants.dart';
 
@@ -20,44 +18,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController searchController = TextEditingController();
-  String query = '';
-
-  List<String> cat = [
-    'resep-dessert',
-    'masakan-hari-raya',
-    'masakan-tradisional',
-    'makan-malam',
-    'makan-siang',
-    'resep-ayam',
-    'resep-daging',
-    'resep-sayuran',
-    'resep-seafood',
-    'sarapan',
-  ];
-
   int selectedIndex = 0;
-  List<String> category = [
-    'Dessert',
-    'Masakan Hari Raya',
-    'Masakan Tradisional',
-    'Menu Makan Malam',
-    'Menu Makan Siang',
-    'Resep Ayam',
-    'Resep Daging',
-    'Resep Sayuran',
-    'Resep Seafood',
-    'Sarapan'
-  ];
 
+  @override
+  void initState() {
+    futureCategory = fetchCategory(categoryUrl[selectedIndex]);
+    super.initState();
+  }
+
+  // build chips list
   Widget _buildChips() {
     List<Widget> chips = [];
 
-    for (int i = 0; i < category.length; i++) {
+    for (int i = 0; i < categoryLabel.length; i++) {
       ChoiceChip choiceChip = ChoiceChip(
         selected: selectedIndex == i,
         label: Text(
-          category[i],
+          categoryLabel[i],
           style: selectedIndex == i
               ? kSecondaryMediumNormal.copyWith(color: kSecondaryColor)
               : kSecondaryMediumNormal,
@@ -97,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         scrollDirection: Axis.horizontal,
         itemCount: 1,
         itemBuilder: (context, index) {
+          // wrap the list of widget.
           return Wrap(
             spacing: 10,
             children: chips,
@@ -104,17 +82,10 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    //   children: chips,
-    // );
   }
 
-  randomize() {
-    return Random().nextInt(cat.length);
-  }
-
-  Widget categorySection() {
+  // category selector based on index.
+  Widget _categorySection() {
     switch (selectedIndex) {
       case 0:
         CategoryList(selectedIndex: selectedIndex);
@@ -153,22 +124,15 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void initState() {
-    int i = randomize();
-    futureCategory = fetchCategory(cat[selectedIndex]);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    Size deviceSize = MediaQuery.of(context).size;
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
+          // Pull to refresh the page
           child: RefreshIndicator(
             color: kPrimaryColor,
+            // Callback this page.
             onRefresh: () {
               return Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
@@ -178,61 +142,33 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             child: ListView(
               children: [
-                const SizedBox(height: 30),
-                Text(
-                  'What do you want\nto cook today?',
-                  style: kPrimaryTitle.copyWith(height: 1.1),
-                ),
-                const SizedBox(height: 17),
+                // Text Header
+                const Header(
+                    title: 'Temukan Beragam Resep\nOlahan Lezat & Menarik'),
+                // Search Bar & Filter Icon
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      height: deviceSize.height * 0.06,
-                      width: deviceSize.width * 0.75,
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: kShadeColor.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 1),
-                          )
-                        ],
-                        color: const Color(0xffF7F6F6),
-                        borderRadius:
-                            BorderRadius.circular(deviceSize.width / 2),
-                      ),
-                      child: TextField(
-                        controller: searchController,
-                        onSubmitted: (value) {
-                          setState(() {
-                            query = value;
-                          });
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => SearchScreen(query: query),
-                            ),
-                          );
-                        },
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Masakan hari raya',
-                          hintStyle: kPrimarySubtitle.apply(color: kShadeColor),
-                          icon:
-                              SvgPicture.asset('assets/icons/search-lens.svg'),
-                        ),
-                      ),
+                    const SearchBar(),
+                    GestureDetector(
+                      onTap: () {
+                        const snackBar = SnackBar(
+                          content: Text('Fitur Belum Tersedia!'),
+                        );
+
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                      child: SvgPicture.asset('assets/icons/filter.svg'),
                     ),
-                    SvgPicture.asset('assets/icons/filter.svg'),
                     const SizedBox(),
                   ],
                 ),
                 const SizedBox(height: 16),
+                // Chips selector
                 _buildChips(),
                 const SizedBox(height: 16),
-                categorySection(),
+                // Show recipes based on the requested category.
+                _categorySection(),
               ],
             ),
           ),

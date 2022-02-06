@@ -51,7 +51,7 @@ TextStyle kSecondaryMediumNormal = TextStyle(
 );
 TextStyle kSecondaryRegularNormal = TextStyle(
   fontFamily: 'Inter',
-  fontSize: 13,
+  fontSize: 14,
   fontWeight: FontWeight.w400,
   color: kTextColor,
 );

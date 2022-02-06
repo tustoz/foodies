@@ -1,17 +1,32 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:foodies/screens/onboarding.dart';
+import 'package:foodies/components/bottom_bar.dart';
 
-void main() {
+import 'package:foodies/screens/onboarding.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+int? initScreen;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final initScreen = prefs.getInt("initScreen");
+  await prefs.setInt("initScreen", 1);
+
   SystemChrome.setPreferredOrientations(
-    [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
+    [
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ],
   );
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.light,
       statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.dark,
     ),
   );
 
@@ -23,9 +38,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Foodies',
-      home: OnboardingScreen(),
+      routes: {
+        'Home': (context) => const BottomBar(),
+        'Onboarding': (context) => const OnboardingScreen(),
+      },
+      initialRoute:
+          initScreen == 0 || initScreen == null ? "Home" : "Onboarding",
       debugShowCheckedModeBanner: false,
     );
   }
