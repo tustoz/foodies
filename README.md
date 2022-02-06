@@ -9,5 +9,5 @@ Packages
 - [flutter_svg](https://pub.dev/packages/flutter_svg)
 - [cached_network_image](https://pub.dev/packages/cached_network_image)
 
-Design Credit: [Viola Luna](https://www.uplabs.com/posts/the-cook-book-recipe-app)
+Design Credit: [Viola Luna](https://www.uplabs.com/posts/the-cook-book-recipe-app)\
 Backend API Creator Credit: [Ekik A](https://github.com/tomorisakura)
