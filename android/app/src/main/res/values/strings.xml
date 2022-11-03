@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+	<string name="app_name">
+		Foodies
+	</string>
+	<string name="facebook_app_id">
+		807510183635631
+	</string>
+	<string name="fb_login_protocol_scheme">
+		fb807510183635631
+	</string>
+	<string name="facebook_client_token">
+		3953870fef7f9a55778fa1e1560d6377
+	</string>
+</resources>
