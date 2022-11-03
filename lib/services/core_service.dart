@@ -7,10 +7,10 @@ import 'package:foodies/models/food_detail.dart';
 import 'package:foodies/models/search_food.dart';
 import 'package:http/http.dart' as http;
 
-const String baseUrl = 'https://masak-apa-tomorisakura.vercel.app/';
-const String categoryUrl = '/api/category/recipes/';
-const String foodDetailUrl = '/api/recipe/';
-const String searchUrl = '/api/search/?q=';
+const String baseUrl = 'https://masak-apa-tomorisakura.vercel.app/api';
+const String categoryUrl = '/category/recipes/';
+const String foodDetailUrl = '/recipe/';
+const String searchUrl = '/search/?q=';
 
 Map<String, String> headers = {
   'Content-Type': 'application/json;charset=UTF-8',

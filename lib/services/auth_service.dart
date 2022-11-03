@@ -67,9 +67,9 @@ class Auth {
     );
 
     await gitHubSignIn.signIn(context).then((value) async {
-      final twitterAuthCredential = GithubAuthProvider.credential(value.token);
+      final githubAuthCredential = GithubAuthProvider.credential(value.token);
 
-      await _firebaseAuth.signInWithCredential(twitterAuthCredential);
+      await _firebaseAuth.signInWithCredential(githubAuthCredential);
     });
   }
 

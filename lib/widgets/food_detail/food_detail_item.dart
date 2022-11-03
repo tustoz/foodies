@@ -49,13 +49,13 @@ class _FoodDetailItemState extends State<FoodDetailItem>
                 SizedBox(
                   height: deviceSize.height * 0.4,
                   width: deviceSize.width,
-                  child: widget.data.thumb!.isNotEmpty
+                  child: widget.data.thumb?.toString() == null
                       ? CachedNetworkImage(
                           imageUrl: widget.imageUrl,
                           fit: BoxFit.cover,
                         )
                       : CachedNetworkImage(
-                          imageUrl: widget.data.thumb!,
+                          imageUrl: widget.data.thumb.toString(),
                           fit: BoxFit.cover,
                         ),
                 ),
